@@ -146,8 +146,9 @@ def gen_form (form_path, num_gen, save_path, bg_path = None):
                         res = blend(img2overlay, overlay, tmp_x, tmp_y)
 
             file_name = save_path + "/syn"+str(count_img)+".jpg"
-            print(i)
-            np.where(res < 240, res, res+10)
+#             print(i)
+            filter_res = np.where(res < 100, 1, res)
+            res = res + filter_res
             cv2.imwrite(file_name, res)
 
     else:
@@ -175,7 +176,8 @@ def gen_form (form_path, num_gen, save_path, bg_path = None):
 
             file_name = save_path + "/syn"+str(count_img)+".jpg"
             # print(i)
-            np.where(res < 240, res, res+10)
+            filter_res = np.where(res < 100, 1, res)
+            res = res + filter_res
             rotated = rotate_image(res, random.randrange(0, 15, 1))
             changed = change_bg(rotated, bg)
             # print(changed)
